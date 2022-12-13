@@ -2,7 +2,7 @@
 
 from collections import deque
 
-# Initializing Class
+# Initializing Class: Queue
 class Queue:
     def __init__(self, *elements):
         self._elements = deque(elements)
@@ -19,3 +19,10 @@ class Queue:
 
     def dequeue(self):
         return self._elements.popleft()
+
+
+# Initializing Class: Stack(Queue)
+class Stack(Queue):
+    def dequeue(self):
+        return self._elements.pop()
+        
