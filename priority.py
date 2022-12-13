@@ -11,5 +11,11 @@ messages.enqueue_with_priority(NEUTRAL, "Radio station tuned in")
 messages.enqueue_with_priority(CRTICAL, "Brake pedal depressed")
 messages.enqueue_with_priority(IMPORTANT, "Hazard lights turned on")
 
-# Dequeing message with the lowest priority
+# Dequeing messages from the lowest priority
+# print(messages.dequeue())
+
+# Dequeing messages from the highest priority
+print(messages.dequeue())
+print(messages.dequeue())
+print(messages.dequeue())
 print(messages.dequeue())

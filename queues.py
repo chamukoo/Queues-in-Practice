@@ -34,8 +34,14 @@ class PriorityQueue:
         self._elements = []
 
     def enqueue_with_priority(self, priority, value):
-        heappush(self._elements, (priority, value))
+        # heappush(self._elements, (priority, value))
+
+        # Making the priority a negative number so that 
+        # the highest one becomes the lowest
+        heappush(self._elements, (-priority, value))
+
 
     def dequeue(self):
-        return heappop(self._elements)
+        # return heappop(self._elements)
+        return heappop(self._elements)[1]
         
