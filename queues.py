@@ -48,7 +48,7 @@ class PriorityQueue:
 
 
 # Initializing Class: Priority
-class PriorityQueue2:
+class PriorityQueue:
     def __init__(self):
         self._elements = []
         self._counter = count()
@@ -59,3 +59,15 @@ class PriorityQueue2:
 
     def dequeue(self):
         return heappop(self._elements)[-1]
+
+
+# Initializing Class: Interable Misin
+class IterableMixin:
+    def __len__(self):
+        return len(self._elements)
+
+    def __iter__(self):
+        while len(self) > 0:
+            yield self.dequeue()
+
+            
