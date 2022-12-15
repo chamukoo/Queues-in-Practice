@@ -4,3 +4,6 @@ nodes, graph = load_graph("roadmap.dot", City.from_dict)
 
 # Display nodes in London
 print(nodes["london"])
+
+# Display graph
+print(graph)
