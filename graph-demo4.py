@@ -1,3 +1,5 @@
+# Shortest Path Using Breadth-First Traversal
+
 import networkx as nx
 from graph import City, load_graph
 
@@ -12,5 +14,3 @@ city2 = nodes["perth"]
 # Display the shortest path in city1 and city2
 for i, path in enumerate(nx.all_shortest_paths(graph, city1, city2), 1):
     print(f"{i}.", " → ".join(city.name for city in path))
-
-
