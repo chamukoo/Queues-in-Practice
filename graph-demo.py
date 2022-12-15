@@ -11,3 +11,8 @@ print(graph)
 # Display neighbors in london through for loop
 for neighbor in graph.neighbors(nodes["london"]):
     print(neighbor.name)
+
+# Display weights and neighbors in london through for loop
+for neighbhor, weights in graph[nodes["london"]].items():
+    print(weights["distance"], neighbor.name)
+    
