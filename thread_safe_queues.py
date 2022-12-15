@@ -3,7 +3,9 @@
 import threading
 import argparse
 
+from dataclasses import dataclass, field
 from random import choice, randint
+from enum import IntEnum
 from time import sleep
 
 from queue import LifoQueue, PriorityQueue, Queue
@@ -13,41 +15,6 @@ QUEUE_TYPES = {
     "lifo": LifoQueue,
     "heap": PriorityQueue
 }
-
-def main(args):
-    buffer = QUEUE_TYPES[args.queue]()
-
-    producers = [
-        Producer(args.producer_speed, buffer, PRODUCTS)
-        for _ in range(args.producers)
-    ]
-
-    consumers = [
-        Consumer(args.consumer_speed, buffer)
-        for _ in range(args.consumers)
-    ]
-
-    for producer in producers:
-        producer.start()
-
-    for consumer in consumers:
-        consumer.start()
-
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-q", "--queue", choices=QUEUE_TYPES, default="fifo")
-    parser.add_argument("-p", "--producesr", type=int, default=3)
-    parser.add_argument("-c", "--consumers", type=int, default=2)
-    parser.add_argument("-ps", "--producer-speed", type=int, default=1)
-    parser.add_argument("-cs", "--consumer-speed", type=int, default=1)
-    return parser.parse_args()
-
-if __name__ == "__main__":
-    try:
-        main(parse_args())
-    except KeyboardInterrupt:
-        pass
 
 # List
 PRODUCTS = (
@@ -67,6 +34,15 @@ PRODUCTS = (
     ":thread:",
     ":yo-yo:",
 )
+
+@dataclass(order=True)
+class Product:
+    priority: int
+    label: str = field(compare=False)
+
+    def __str__(self):
+        return self.label
+        
 
 # Initiaizing Class: Worker
 class Worker(threading.Thread):
@@ -123,3 +99,40 @@ class Consumer(Worker):
             self.buffer.task_done()
             self.simulate_idle()
 
+
+def main(args):
+    buffer = QUEUE_TYPES[args.queue]()
+
+    producers = [
+        Producer(args.producer_speed, buffer, PRODUCTS)
+        for _ in range(args.producers)
+    ]
+
+    consumers = [
+        Consumer(args.consumer_speed, buffer)
+        for _ in range(args.consumers)
+    ]
+
+    for producer in producers:
+        producer.start()
+
+    for consumer in consumers:
+        consumer.start()
+
+    view = View(buffer, producers, consumers)
+    view.animate()
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-q", "--queue", choices=QUEUE_TYPES, default="fifo")
+    parser.add_argument("-p", "--producesr", type=int, default=3)
+    parser.add_argument("-c", "--consumers", type=int, default=2)
+    parser.add_argument("-ps", "--producer-speed", type=int, default=1)
+    parser.add_argument("-cs", "--consumer-speed", type=int, default=1)
+    return parser.parse_args()
+
+if __name__ == "__main__":
+    try:
+        main(parse_args())
+    except KeyboardInterrupt:
+        pass
