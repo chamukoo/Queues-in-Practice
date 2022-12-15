@@ -55,6 +55,7 @@ async def worker(worker_id, session, queue, links, max_depth):
     while True:
         url, depth = await queue.get()
         links[url] += 1
+
         try: 
             if depth <= max_depth:
                 print(f"[{worker_id} {depth=} {url=}]", file=sys.stderr)
@@ -73,7 +74,7 @@ async def fetch_html(session, url):
             return await response.text() 
 
 
-def parse_link(url, html):
+def parse_links(url, html):
     soup = BeautifulSoup(html, features="html.parser")
     for anchor in soup.select("a[href]"):
         href = anchor.get("href").lower()
@@ -91,7 +92,7 @@ def parse_args():
 
 def display(links):
     for url, count in links.most_common():
-        print(f"{count:3} {url}")
+        print(f"{count:>3} {url}")
 
 
 if __name__ == "__main__":
