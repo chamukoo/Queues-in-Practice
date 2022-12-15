@@ -1,4 +1,4 @@
-# Queues: Firs-In, First-Out (FIFO)
+# queues.py
 
 from collections import deque
 from heapq import heappop, heappush

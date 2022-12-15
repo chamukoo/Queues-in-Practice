@@ -1,4 +1,3 @@
-
 from graph import City, load_graph
 
 nodes, graph = load_graph("roadmap.dot", City.from_dict)
@@ -28,5 +27,4 @@ def by_distance(weights):
 # Display distance and neighbors in london through for loop
 for neighbor, weights in sort_by(graph[nodes["london"]], by_distance):
     print(f"{weights['distance']:>3} miles, {neighbor.name}")
-
-    
+  
