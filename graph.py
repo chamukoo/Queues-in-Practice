@@ -49,10 +49,12 @@ class City(NamedTuple):
                     visited.add(neighbor)
                     queue.enqueue(neighbor)
 
-    def breadth_first_search(graph, source, predicate):
-        for node in breadth_first_traverse(graph, source):
-            if predicate(node):
-                return node
+    def breadth_first_search(graph, source, predicate, order_by=None):
+        # for node in breadth_first_traverse(graph, source):
+            # if predicate(node):
+                # return node
+
+        return search(breadth_first_traverse, graph, source, predicate, order_by)
 
     def shortest_path(graph, source, destination, order_by=None):
         queue = Queue(source)
@@ -124,5 +126,8 @@ class City(NamedTuple):
 
         return visit(source)
 
+    def depth_first_search(graph, source, predicate, order_by=None):
+        return search(depth_first_traverse, graph, source, predicate, order_by)
 
+    
 
