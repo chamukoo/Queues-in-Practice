@@ -2,6 +2,9 @@
 
 import threading
 import argparse
+
+from random import randint
+from time import sleep
 from queue import LifoQueue, PriorityQueue, Queue
 
 QUEUE_TYPES = {
@@ -57,4 +60,10 @@ class Worker(threading.Thread):
         self.working = False
         self.progress = 0
 
+    @property
+    def state(self):
+        if self.working:
+            return f"{self.product} ({self.progress}%)"
+        return ":zzz: Idle"
 
+        
