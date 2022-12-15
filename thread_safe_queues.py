@@ -115,8 +115,10 @@ class Consumer(Worker):
 def main(args):
     buffer = QUEUE_TYPES[args.queue]()
 
+    products = PRIORITIZED_PRODUCTS if args.queue == "heap" else PRODUCTS
+
     producers = [
-        Producer(args.producer_speed, buffer, PRODUCTS)
+        Producer(args.producer_speed, buffer, products)
         for _ in range(args.producers)
     ]
 
@@ -131,8 +133,8 @@ def main(args):
     for consumer in consumers:
         consumer.start()
 
-    view = View(buffer, producers, consumers)
-    view.animate()
+    # view = View(buffer, producers, consumers)
+    # view.animate()
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -148,3 +150,4 @@ if __name__ == "__main__":
         main(parse_args())
     except KeyboardInterrupt:
         pass
+
