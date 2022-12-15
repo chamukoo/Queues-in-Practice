@@ -1,6 +1,5 @@
 # multiprocess_queue.py
 
-import pygraphviz
 import time
 import queue
 import multiprocessing
@@ -10,6 +9,8 @@ from itertools import product
 from hashlib import md5
 from dataclasses import dataclass
 from string import ascii_lowercase
+
+POISON_PILL = None
 
 # Initializing a Class: Combinations
 class Combinations:
@@ -100,7 +101,7 @@ def main(args):
             pass
     else:
         print("Unable to find a solution")
-        
+
             
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -120,4 +121,4 @@ def chunk_indices(length, num_chunks):
 
 
 if __name__ == "__main__":
-    main()
+    main(parse_args())
