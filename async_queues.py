@@ -1,5 +1,6 @@
 # async_queues.py
 
+import sys
 import argparse
 import asyncio
 import aiohttp
@@ -7,6 +8,7 @@ import aiohttp
 from collections import Counter
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
+from typing import NamedTuple
 
 async def main(args):
     session = aiohttp.ClientSession()
@@ -33,4 +35,12 @@ if __name__ == "__main__":
 async def fetch_html(session, url):
     async with session.get(url) as response:
         if response.ok and response.content_type == "text/html":
-            return await response.text()       
+            return await response.text()     
+
+def parse_link(url, html):
+    soup = BeautifulSoup(html, features="html.parser")
+    for anchor in soup.select("a[href]"):
+        href = anchor.get("href").lower()
+        if not href.startswith("javascript:"):
+            yield urljoin(url, href)
+
