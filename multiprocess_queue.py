@@ -1,10 +1,14 @@
 # multiprocess_queue.py
 
+import pygraphviz
 import time
+import queue
 import multiprocessing
+import argparse
 
-from hashlib import md5
 from itertools import product
+from hashlib import md5
+from dataclasses import dataclass
 from string import ascii_lowercase
 
 # Initializing a Class: Combinations
@@ -26,6 +30,18 @@ class Combinations:
             for i in reverse_md5(range(self.length))
         )
 
+@dataclass(frozen=True)
+class Job:
+    combinations: Combinations
+    start_index: int
+    stop_index: int
+
+    def __call__(self, hash_value):
+        for index in range(self.start_index, self.stop_index):
+            text_bytes = self.combinations[index].encode("utf-8")
+            hashed = md5(text_bytes).hexdigest()
+            if hashed == hash_value:
+                return text_bytes.decode("utf-8")
 
 # Initializing a Class: Worker
 class Worker(multiprocessing.Process):
@@ -42,6 +58,7 @@ class Worker(multiprocessing.Process):
                 self.queue_out(plaintext)
                 break
 
+
 # Reversing an MD5 Hash on a Single Thread
 def reverse_md5(hash_value, alphabet=ascii_lowercase, max_length=6):
     for length in range(1, max_length + 1):
@@ -51,11 +68,34 @@ def reverse_md5(hash_value, alphabet=ascii_lowercase, max_length=6):
             if hashed == hash_value:
                 return text_bytes.decode("utf-8")
 
-def main():
-    t1 = time.perf_counter()
-    text = reverse_md5("a9d1cbf71942327e98b40cf5ef38a960")
-    print(f"{text} (found in {time.perf_counter() - t1:.1f}s)")
+def main(args):
+    # t1 = time.perf_counter()
+    # text = reverse_md5("a9d1cbf71942327e98b40cf5ef38a960")
+    # print(f"{text} (found in {time.perf_counter() - t1:.1f}s)")
 
+    queue_in = multiprocessing.Queue()
+    queue_out = multiprocessing.Queue()
+
+    workers = [
+        Worker(queue_in, queue_out, args.hash_value)
+        for _ in range(args.num_workers)
+
+    ]
+
+    for worker in workers:
+        worker.start()
+
+    for text_lenght in range(1, args.max_length + 1):
+        combinations = Combinations(ascii_lowercase, text_lenght)
+        for indices in chunk_indices(len(combinations), len(workers)):
+            queue_in.put(Job(combinations, *indices))
+            
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("hash_value")
+    parser.add_argument("-m", "--max-length", type=int, default=6)
+    parser.add_argument("-w", "--num_workers", type=int, default=multiprocessing.cpu_count())
+    return parser.parse_args()
 
 def chunk_indices(length, num_chunks):
     start = 0
