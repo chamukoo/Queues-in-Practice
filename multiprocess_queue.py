@@ -19,3 +19,5 @@ def main():
     text = reverse_md5("a9d1cbf71942327e98b40cf5ef38a960")
     print(f"{text} (foun in {time.perf_counter() - t1:.1f}s)")
 
+if __name__ == "__main__":
+    main()
