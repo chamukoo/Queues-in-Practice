@@ -1,6 +1,7 @@
 from typing import NamedTuple
 import networkx as nx
 from queues import Queue
+from collections import deque
 
 # Initializing Class: City
 class City(NamedTuple):
@@ -72,4 +73,17 @@ class City(NamedTuple):
                     if neighbor == destination:
                         return retrace(previous, source, destination)
 
-                        
+    def retrace(previous, source, destination):
+        path = deque()
+
+        current =  destination
+        while current != source:
+            path.appendleft(current)
+            current = previous.get(current)
+
+            if current is None:
+                return None
+            
+        path.appendleft(source)
+        return list(path)
+
