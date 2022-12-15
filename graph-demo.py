@@ -7,3 +7,7 @@ print(nodes["london"])
 
 # Display graph
 print(graph)
+
+# Display neighbors in london through for loop
+for neighbor in graph.neighbors(nodes["london"]):
+    print(neighbor.name)
