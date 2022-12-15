@@ -31,4 +31,3 @@ class City(NamedTuple):
             for name1, name2, weights in graph.edge(data=True)
         )
 
-        
