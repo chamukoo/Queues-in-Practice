@@ -34,6 +34,7 @@ class City(NamedTuple):
             for name1, name2, weights in graph.edge(data=True)
         )
 
+    # Breadth-First Search Using a FIFO Queue
     def breadth_first_traverse(graph, source):
         queue = Queue(source)
         visited = {source}
@@ -56,6 +57,8 @@ class City(NamedTuple):
 
         return search(breadth_first_traverse, graph, source, predicate, order_by)
 
+
+    # Shortest Path Using Breadth-First Traversal
     def shortest_path(graph, source, destination, order_by=None):
         queue = Queue(source)
         visited = {source}
@@ -93,6 +96,8 @@ class City(NamedTuple):
     def connected(graph, source, destination):
         return shortest_path(graph, source, destination) is not None
 
+
+    # Depth-First Search Using a LIFO Queue
     def depth_first_traverse(graph, source, order_by=None):
         stack = Stack(source)
         visited = set()
@@ -129,5 +134,8 @@ class City(NamedTuple):
     def depth_first_search(graph, source, predicate, order_by=None):
         return search(depth_first_traverse, graph, source, predicate, order_by)
 
-    
+    def search(traverse, graph, source, predicate, order_by=None):
+        for node in traverse(graph, source, order_by):
+            if predicate(node):
+                return node
 
