@@ -2,6 +2,7 @@
 
 import networkx as nx
 from graph import City, load_graph
+from graph import connected
 
 nodes, graph = load_graph("roadmap.dot", City.from_dict)
 
@@ -32,5 +33,11 @@ print(" → ".join(
     city.name
     for city in shortest_path(graph, city1, city2, by_latitude)
 ))
+
+# Dsiplay whether the two nodes are connected
+print(connected(graph, nodes["belfast"], nodes["glasgow"]))
+print(connected(graph, nodes["belfast"], nodes["derry"]))
+
+
 
 
