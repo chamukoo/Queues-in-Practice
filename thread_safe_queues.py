@@ -27,7 +27,11 @@ def main(args):
         for _ in range(args.consumers)
     ]
 
-    
+    for producer in producers:
+        producer.start()
+
+    for consumer in consumers:
+        consumer.start()
 
 
 def parse_args():
