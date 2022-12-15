@@ -15,3 +15,8 @@ def distance(weights):
 for city in ddijkstra_shortest_path(graph, city1, city2,distance):
     print(city.name)
 
+def weight(node1, node2, weights):
+    return distance(weights)
+
+for city in nx.dijkstra_path(graph, city1, city2, weight):
+    print(city.name)
