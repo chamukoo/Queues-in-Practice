@@ -37,7 +37,3 @@ print(" → ".join(
 # Dsiplay whether the two nodes are connected
 print(connected(graph, nodes["belfast"], nodes["glasgow"]))
 print(connected(graph, nodes["belfast"], nodes["derry"]))
-
-
-
-
