@@ -31,3 +31,8 @@ class City(NamedTuple):
             for name1, name2, weights in graph.edge(data=True)
         )
 
+    def sort_by(neighbors, strategy):
+        return sorted(neighbors.items(), key=lambda item: strategy(item[1]))
+
+    
+
