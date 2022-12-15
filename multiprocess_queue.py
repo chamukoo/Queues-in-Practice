@@ -69,7 +69,7 @@ def reverse_md5(hash_value, alphabet=ascii_lowercase, max_length=6):
                 return text_bytes.decode("utf-8")
 
 def main(args):
-    # t1 = time.perf_counter()
+    t1 = time.perf_counter()
     # text = reverse_md5("a9d1cbf71942327e98b40cf5ef38a960")
     # print(f"{text} (found in {time.perf_counter() - t1:.1f}s)")
 
@@ -79,7 +79,6 @@ def main(args):
     workers = [
         Worker(queue_in, queue_out, args.hash_value)
         for _ in range(args.num_workers)
-
     ]
 
     for worker in workers:
@@ -89,6 +88,19 @@ def main(args):
         combinations = Combinations(ascii_lowercase, text_lenght)
         for indices in chunk_indices(len(combinations), len(workers)):
             queue_in.put(Job(combinations, *indices))
+
+    while any(worker.is_alive() for worker in workers):
+        try:
+            solution = queue_out.get(timeout=0.1)
+            if solution:
+                t2 = time.perf_counter()
+                print(f"{solution} (found in {t2 - t1:.f}s)")
+                break
+        except queue.Empty:
+            pass
+    else:
+        print("Unable to find a solution")
+        
             
 def parse_args():
     parser = argparse.ArgumentParser()
