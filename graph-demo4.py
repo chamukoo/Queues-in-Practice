@@ -14,3 +14,23 @@ city2 = nodes["perth"]
 # Display the shortest path in city1 and city2
 for i, path in enumerate(nx.all_shortest_paths(graph, city1, city2), 1):
     print(f"{i}.", " → ".join(city.name for city in path))
+
+
+from graph import shortest_path
+
+# The first path follows the natural order of neighbors from the DOT file
+print(" → ".join(
+    city.name 
+    for city in shortest_path(graph, city1, city2)))
+
+
+def by_latitude(city):
+    return -city.latitude
+
+# The second one prefers neighbors with a higher latitude
+print(" → ".join(
+    city.name
+    for city in shortest_path(graph, city1, city2, by_latitude)
+))
+
+
