@@ -34,5 +34,8 @@ class City(NamedTuple):
     def sort_by(neighbors, strategy):
         return sorted(neighbors.items(), key=lambda item: strategy(item[1]))
 
+    def by_distance(weights):
+        return float(weights["distance"])
+        
     
 
