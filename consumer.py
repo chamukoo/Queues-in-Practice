@@ -17,3 +17,4 @@ with pika.BlockingConnection() as connection:
         on_message_callback=callback
     )
     channel.stop_consuming()
+    
