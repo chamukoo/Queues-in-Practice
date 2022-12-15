@@ -10,6 +10,13 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 from typing import NamedTuple
 
+
+# Initializing Class: Job
+class Job(NamedTuple):
+    url: str
+    depth: int = 1
+    
+
 async def main(args):
     session = aiohttp.ClientSession()
 
