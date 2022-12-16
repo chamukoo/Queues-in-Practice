@@ -1,8 +1,8 @@
 # Shortest Path Using Breadth-First Traversal
 
 import networkx as nx
-from queues_demo.graph import City, load_graph
-from queues_demo.graph import connected
+from graph import City, load_graph
+from graph import connected
 
 nodes, graph = load_graph("roadmap.dot", City.from_dict)
 
@@ -17,7 +17,7 @@ for i, path in enumerate(nx.all_shortest_paths(graph, city1, city2), 1):
     print(f"{i}.", " → ".join(city.name for city in path))
 
 
-from queues_demo.graph import shortest_path
+from graph import shortest_path
 
 # The first path follows the natural order of neighbors from the DOT file
 print(" → ".join(

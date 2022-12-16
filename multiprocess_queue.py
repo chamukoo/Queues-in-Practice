@@ -75,8 +75,8 @@ def reverse_md5(hash_value, alphabet=ascii_lowercase, max_length=6):
 
 def main(args):
     t1 = time.perf_counter()
-    text = reverse_md5("a9d1cbf71942327e98b40cf5ef38a960")
-    print(f"{text} (found in {time.perf_counter() - t1:.1f}s)")
+    #text = reverse_md5("a9d1cbf71942327e98b40cf5ef38a960")
+    #print(f"{text} (found in {time.perf_counter() - t1:.1f}s)")
 
     queue_in = multiprocessing.Queue()
     queue_out = multiprocessing.Queue()

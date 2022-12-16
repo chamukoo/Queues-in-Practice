@@ -1,7 +1,7 @@
 # Depth-First Search Using a LIFO Queue
 
 import networkx as nx
-from queues_demo.graph import City, load_graph
+from graph import City, load_graph
 
 def is_twentieth_century(year):
     return year and 1901 <= year <= 2000
@@ -21,7 +21,7 @@ else:
 
 # Now, breadth_first_search() and depth_first_search() functions 
 # call search() with the corresponding traversal strategy.
-from queues_demo.graph import (
+from graph import (
     City,
     load_graph,
     depth_first_traverse,

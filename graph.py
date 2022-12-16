@@ -1,6 +1,8 @@
-from typing import NamedTuple
+# graph.py
+
 from collections import deque
 from math import inf as infinity
+from typing import NamedTuple
 from queues import MutableMinHeap, Queue, Stack
 
 import networkx as nx
@@ -17,12 +19,13 @@ class City(NamedTuple):
     @classmethod
     def from_dict(cls, attrs):
         return cls(
-            name=attrs["xlabel"],
-            country=attrs["country"],
-            year=int(attrs["year"]) or None,
-            latitude=float(attrs["latitude"]),
-            longitude=float(attrs["longitude"]),
+            name = attrs["xlabel"],
+            country = attrs["country"],
+            year = int(attrs["year"]) or None,
+            latitude = float(attrs["latitude"]),
+            longitude = float(attrs["longitude"]),
         )
+
 
 def load_graph(filename, node_factory):
     graph = nx.nx_agraph.read_dot(filename)
@@ -71,7 +74,6 @@ def shortest_path(graph, source, destination, order_by=None):
     while queue:
         node = queue.dequeue()
         neighbors = list(graph.neighbors(node))
-
         if order_by:
             neighbors.sort(key=order_by)     
         for neighbor in neighbors:
@@ -119,6 +121,7 @@ def depth_first_traverse(graph, source, order_by=None):
             for neighbor in reversed(neighbors):
                 stack.enqueue(neighbor)
 
+
 def recursive_depth_first_traverse(graph, source, order_by=None):
     visited = set()
 
@@ -135,8 +138,10 @@ def recursive_depth_first_traverse(graph, source, order_by=None):
 
     return visit(source)
 
+
 def depth_first_search(graph, source, predicate, order_by=None):
         return search(depth_first_traverse, graph, source, predicate, order_by)
+
 
 def search(traverse, graph, source, predicate, order_by=None):
     for node in traverse(graph, source, order_by):

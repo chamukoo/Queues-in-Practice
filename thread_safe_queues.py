@@ -112,6 +112,19 @@ class Consumer(Worker):
             self.simulate_idle()
 
 
+class View:
+    def __nit__(self, buffer, producers, consumers):
+        self.buffer = buffer
+        self.producers = producers
+        self.consumers = consumers
+
+    def animate(self):
+        with Live(self.render(), screen=True, refresh_per_second=10) as live:
+            while True:
+                live.update(self.render())
+
+    
+
 def main(args):
     buffer = QUEUE_TYPES[args.queue]()
 
@@ -133,13 +146,13 @@ def main(args):
     for consumer in consumers:
         consumer.start()
 
-    # view = View(buffer, producers, consumers)
-    # view.animate()
+    view = View(buffer, producers, consumers)
+    view.animate()
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-q", "--queue", choices=QUEUE_TYPES, default="fifo")
-    parser.add_argument("-p", "--producesr", type=int, default=3)
+    parser.add_argument("-p", "--producers", type=int, default=3)
     parser.add_argument("-c", "--consumers", type=int, default=2)
     parser.add_argument("-ps", "--producer-speed", type=int, default=1)
     parser.add_argument("-cs", "--consumer-speed", type=int, default=1)

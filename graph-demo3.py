@@ -1,4 +1,4 @@
-from queues_demo.graph import (
+from graph import (
     City, 
     load_graph,
     breadth_first_traverse,

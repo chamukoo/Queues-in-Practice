@@ -1,9 +1,10 @@
-from queues_demo.graph import City, load_graph
+
+from graph import City, load_graph
 
 nodes, graph = load_graph("roadmap.dot", City.from_dict)
 
 # Display nodes in London
-print(nodes["london"])
+nodes["london"]
 
 # Display graph
 print(graph)

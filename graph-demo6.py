@@ -1,7 +1,7 @@
 # Dijkstra’s Algorithm Using a Priority Queue
 
 import networkx as nx
-from queues_demo.graph import City, load_graph, ddijkstra_shortest_path
+from graph import City, load_graph, ddijkstra_shortest_path
 
 nodes, graph = load_graph("roadmap.dot", City.from_dict)
 

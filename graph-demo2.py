@@ -1,7 +1,7 @@
 # Breadth-First Search Using a FIFO Queue
 
 import networkx as nx
-from queues_demo.graph import City, load_graph
+from graph import City, load_graph
 
 def is_twentieth_century(year):
     return year and 1901 <= year <= 2000
