@@ -31,6 +31,7 @@ class Combinations:
             for i in reverse_md5(range(self.length))
         )
 
+
 @dataclass(frozen=True)
 class Job:
     combinations: Combinations
@@ -115,6 +116,7 @@ def parse_args():
     parser.add_argument("-m", "--max-length", type=int, default=6)
     parser.add_argument("-w", "--num_workers", type=int, default=multiprocessing.cpu_count())
     return parser.parse_args()
+
 
 def chunk_indices(length, num_chunks):
     start = 0

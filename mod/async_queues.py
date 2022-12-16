@@ -6,9 +6,9 @@ import asyncio
 import aiohttp
 
 from collections import Counter
-from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 from typing import NamedTuple
+from urllib.parse import urljoin
 
 
 # Initializing Class: Job

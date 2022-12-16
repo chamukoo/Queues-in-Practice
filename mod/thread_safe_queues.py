@@ -52,6 +52,7 @@ class Product:
     def __str__(self):
         return self.label
 
+
 # Initializing Class: Priority
 class Priority(IntEnum):
     HIGH = 1
@@ -165,7 +166,7 @@ class View:
 def main(args):
     buffer = QUEUE_TYPES[args.queue]()
 
-    products = PRIORITIZED_PRODUCTS if args.queue == "lifo" else PRODUCTS
+    products = PRIORITIZED_PRODUCTS if args.queue == "fifo" else PRODUCTS
 
     producers = [
         Producer(args.producer_speed, buffer, products)
