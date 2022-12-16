@@ -1,4 +1,5 @@
 # Apache Kafka: kafka-python3
+
 from kafka import KafkaProducer
 
 producer = KafkaProducer(bootsrap_servers="localhost:9092")

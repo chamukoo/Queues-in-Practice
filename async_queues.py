@@ -27,7 +27,7 @@ async def main(args):
     try:
         links = Counter()
         queue = asyncio.Queue()               # Queue
-        # queue = asyncio.LifoQueue           # LifoQueue
+        # queue = asyncio.LifoQueue()           # LifoQueue
         # queue = asyncio.PriorityQueue()     # PriorityQueue
         tasks = [
             asyncio.create_task(
@@ -48,7 +48,7 @@ async def main(args):
         for task in tasks:
             task.cancel()
 
-        await asyncio.gather(*task, return_exceptions=True)
+        await asyncio.gather(*tasks, return_exceptions=True)
 
         display(links)
 
@@ -79,12 +79,14 @@ async def worker(worker_id, session, queue, links, max_depth):
 
 async def fetch_html(session, url):
     async with session.get(url) as response:
+        
         if response.ok and response.content_type == "text/html":
             return await response.text() 
 
 
 def parse_links(url, html):
     soup = BeautifulSoup(html, features="html.parser")
+
     for anchor in soup.select("a[href]"):
         href = anchor.get("href").lower()
         if not href.startswith("javascript:"):
