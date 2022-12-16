@@ -26,9 +26,9 @@ async def main(args):
 
     try:
         links = Counter()
-        # queue = asyncio.Queue()           # Queue
-        # queue = asyncio.LifoQueue         # LifoQueue
-        queue = asyncio.PriorityQueue()     # PriorityQueue
+        queue = asyncio.Queue()               # Queue
+        # queue = asyncio.LifoQueue           # LifoQueue
+        # queue = asyncio.PriorityQueue()     # PriorityQueue
         tasks = [
             asyncio.create_task(
                 worker(
@@ -51,12 +51,13 @@ async def main(args):
         await asyncio.gather(*task, return_exceptions=True)
 
         display(links)
+
     finally:
         await session.close()
 
 
 async def worker(worker_id, session, queue, links, max_depth):
-    print(f"[{worker_id} starting", file=sys.stderr)
+    print(f"[{worker_id} starting]", file=sys.stderr)
 
     while True:
         url, depth = await queue.get()
@@ -68,8 +69,10 @@ async def worker(worker_id, session, queue, links, max_depth):
                 if html := await fetch_html(session, url):
                     for link_url in parse_links(url, html):
                         await queue.put(Job(link_url, depth + 1))
+
         except aiohttp.ClientError:
             print(f"[{worker_id} failed at {url=}]", file=sys.stderr)
+            
         finally:
             queue.task_done()
 
