@@ -1,8 +1,10 @@
 # queues.py
 
+from dataclasses import dataclass
 from collections import deque
-from heapq import heappop, heappush
+from heapq import heappop, heappush, heapify
 from itertools import count
+from typing import Any
 
 # Initializing Class: Interable Misin
 class IterableMixin:
@@ -68,4 +70,14 @@ class MutableMinHeap(IterableMixin):
         self._elements = []
         self._counter = count()
 
-    
+    def __setitem__(self, unique_value, priority):
+        if unique_value in self._elements_by_value:
+            self._elements_by_value[unique_value].priority = priority
+            heapify(self._elements)
+        else:
+            element = Element(priority, next(self._counter), unique_value)
+            self._elements_by_value[unique_value] = element
+            heappush(self._elements, element)
+            
+
+        
