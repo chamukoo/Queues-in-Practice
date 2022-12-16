@@ -1,49 +1,34 @@
-# Depth-First Search Using a LIFO Queue
+# Dijkstra’s Algorithm Using a Priority Queue
 
-print("\n" + ("="*60) + "\n\n\tDepth-First Search Using a LIFO Queue\n\n" + ("="*60))
+print("\n" + ("="*60) + "\n\n\tDijkstra’s Algorithm Using a Priority Queue\n\n" + ("="*60))
 
-# ----------- DEMO 1
+
 import networkx as nx
-from graph import City, load_graph
-
-def is_twentieth_century(year):
-    return year and 1901 <= year <= 2000
+from graph import City, load_graph, dijkstra_shortest_path
 
 nodes, graph = load_graph("roadmap.dot", City.from_dict)
 
-# For statement (Traversal order with nx.dfs_tre())
-print("\n\n\tDEMO 1\n" + ("-"*60) + "\n")
-for node in nx.dfs_tree(graph, nodes["edinburgh"]):
-    print("\t📍", node.name)
-    if is_twentieth_century(node.year):
-        print("\n\tFound:", node.name, node.year)
-        break
-else:
-    print("\n\tNot Found")
+# Setting the two nodes to london and edinburgh
+city1 = nodes["london"]
+city2 = nodes["edinburgh"]
 
 
-# Now, breadth_first_search() and depth_first_search() functions 
-# call search() with the corresponding traversal strategy.
-from graph import (
-    City,
-    load_graph,
-    depth_first_traverse,
-    depth_first_search as dfs,
-)
+# --------- DEMO 1
+def distance(weights):
+    return float(weights["distance"])
 
-def is_twentieth_century(city):
-    return city.year and 1901 <= city.year <= 2000
+print("\n\n\tDEMO 1 - Shortest Path by Distance\n" + ("-"*60) + "\n")
+for city in dijkstra_shortest_path(graph, city1, city2,distance):
+    print("\t" + city.name)
 
-nodes, graph = load_graph("roadmap.dot", City.from_dict)
 
-# ----------- DEMO 2
-print("\n\n\n\tDEMO 2\n" + ("-"*60) + "\n")
-city = dfs(graph, nodes["edinburgh"], is_twentieth_century)
-print("\t" + city.name)
+# --------- DEMO 2
+def weight(node1, node2, weights):
+    return distance(weights)
 
-# ----------- DEMO 3
-print("\n\n\n\tDEMO 3\n" + ("-"*60) + "\n")
-for city in depth_first_traverse(graph, nodes["edinburgh"]):
+print("\n\n\n\tDEMO 2 - Shortest Path by Weight\n" + ("-"*60) + "\n")
+for city in nx.dijkstra_path(graph, city1, city2, weight):
     print("\t" + city.name)
 
 print("\n" + ("="*60))
+ 

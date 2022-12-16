@@ -26,7 +26,7 @@ else:
     print("\nNot Found")
 
 # ---------- DEMO 2
-print("\n\n\tDEMO 2\n" + ("-"*60) + "\n")
+print("\n\n\n\tDEMO 2\n" + ("-"*60) + "\n")
 for node in nx.bfs_tree(graph, nodes["edinburgh"], sort_neighbors=order):
     print("\t📍", node.name)
     if is_twentieth_century(node.year):
@@ -34,4 +34,30 @@ for node in nx.bfs_tree(graph, nodes["edinburgh"], sort_neighbors=order):
         break
 else:
     print("\nNot Found")
+
+from graph import (
+    City, 
+    load_graph,
+    breadth_first_traverse,
+    breadth_first_search as bfs,
+)
+
+def is_twentieth_century(city):
+    return city.year and 1901 <= city.year <= 2000
+
+nodes, graph = load_graph("roadmap.dot", City.from_dict)
+
+# ---------- DEMO 3
+# Display city names at Edinburgh in traversal order
+print("\n\n\n\tDEMO 3\n" + ("-"*60) + "\n")
+city = bfs(graph, nodes["edinburgh"], is_twentieth_century)
+print("\t" + city.name)
+
+
+# ---------- DEMO 4
+print("\n\n\n\tDEMO 4\n" + ("-"*60) + "\n")
+for city in breadth_first_traverse(graph, nodes["edinburgh"]):
+    print("\t" + city.name)
+
+
 print("\n" + ("="*60))
