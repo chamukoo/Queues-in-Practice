@@ -35,7 +35,7 @@ def load_graph(filename, node_factory):
     }
     return nodes, nx.Graph(
         (nodes[name1], nodes[name2], weights)
-        for name1, name2, weights in graph.edge(data=True)
+        for name1, name2, weights in graph.edges(data=True)
     )
 
 
