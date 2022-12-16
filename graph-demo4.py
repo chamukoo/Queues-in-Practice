@@ -2,6 +2,7 @@
 
 print("\n" + ("="*60) + "\n\n\tShortest Path Using Breadth-First Traversal\n\n" + ("="*60))
 
+
 # ----------- DEMO 1
 import networkx as nx
 from graph import City, load_graph
@@ -26,6 +27,7 @@ print("\t" + " → ".join(
     for city in shortest_path(graph, city1, city2)))
 
 
+# ----------- DEMO 3
 def by_latitude(city):
     return -city.latitude
 
