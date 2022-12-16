@@ -120,8 +120,8 @@ class Consumer(Worker):
             self.simulate_idle()
 
 
-class View():
-    def __nit__(self, buffer, producers, consumers):
+class View:
+    def __init__(self, buffer, producers, consumers):
         self.buffer = buffer
         self.producers = producers
         self.consumers = consumers
@@ -159,7 +159,7 @@ class View():
             return ""
         padding = " " * int(29 / 100 * worker.progress)
         align = Align(padding + worker.state, align="left", vertical="middle")
-        return Panel(align, heights=5, title=title)
+        return Panel(align, height=5, title=title)
 
 
 def main(args):
@@ -201,4 +201,3 @@ if __name__ == "__main__":
         main(parse_args())
     except KeyboardInterrupt:
         pass
-
