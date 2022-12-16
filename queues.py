@@ -51,3 +51,21 @@ class PriorityQueue(IterableMixin):
         # return heappop(self._elements)[1]
         return heappop(self._elements)[-1]
 
+
+
+# Initializing Class: MutableMinHeap
+@dataclass(order=True)
+class Element:
+    priority: float
+    count: int
+    value: any
+
+
+class MutableMinHeap(IterableMixin):
+    def __init__(self):
+        super().__init__()
+        self._elements_by_value = {}
+        self._elements = []
+        self._counter = count()
+
+    
